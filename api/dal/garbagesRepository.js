@@ -12,7 +12,6 @@ export const getByEmptyingDates = async (minDate = null, maxDate = null) => {
   maxDate && (findDateCretiria["$lt"] = maxDate);
   const findCretiria =
     findDateCretiria === {} ? {} : { emptyingDate: findDateCretiria };
-  console.log(findCretiria);
   return (await GarbageModel.find(findCretiria)).map((garbage) =>
     garbage.toJSON()
   );

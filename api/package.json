@@ -5,16 +5,19 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require hooks.js --recursive --reporter spec",
     "dev": "node app.js",
     "debug": "nodemon --inspect app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.3.4",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "expresss": "0.0.0",
-    "mongoose": "^5.13.7"
+    "mocha": "^9.0.3",
+    "mongoose": "^5.13.7",
+    "request": "^2.88.2"
   }
 }
