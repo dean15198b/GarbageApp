@@ -1,29 +1,32 @@
 import mongoose from "mongoose";
 
-const garbageSchema = new mongoose.Schema({
-  color: {
-    type: String,
-    enum: ["Green", "Blue", "Orange", "Black"],
-    required: true,
-  },
-  type: {
-    type: String,
-    enum: ["Normal", "Paper Only", "Plastic Only"],
-    required: true,
-  },
-  location: {
+const garbageSchema = new mongoose.Schema(
+  {
+    color: {
+      type: String,
+      enum: ["Green", "Blue", "Orange", "Black"],
+      required: true,
+    },
     type: {
       type: String,
-      enum: ["Point"],
+      enum: ["Normal", "Paper Only", "Plastic Only"],
       required: true,
     },
-    coordinates: {
-      type: [Number],
-      required: true,
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
     },
+    emptyingDate: Date,
   },
-  emptyingDate: Date,
-});
+  { _id: false }
+);
 
 garbageSchema.options.toJSON = {
   transform: function (doc, ret, options) {

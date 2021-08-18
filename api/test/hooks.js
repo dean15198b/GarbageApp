@@ -1,7 +1,7 @@
 import GarbageModel from "../dal/models/garbage.js";
 import connectDbs from "../dbsConnect.js";
 import mongoose from "mongoose";
-import { testGarbageInput } from "./consts.js";
+import { testGarbagesInput } from "./consts.js";
 
 export const mochaHooks = {
   beforeAll: [
@@ -11,8 +11,10 @@ export const mochaHooks = {
   ],
   beforeEach: [
     async function () {
+      console.log("before");
       await mongoose.connection.collections.garbages.drop();
-      await GarbageModel.create(testGarbageInput);
+      await GarbageModel.insertMany(testGarbagesInput);
+      await GarbageModel.updateOne({ _id: "611d1de714febd230c6d8777" });
     },
   ],
 };
