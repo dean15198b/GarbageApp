@@ -2,7 +2,7 @@ import express from "express";
 import * as garbageController from "../controllers/garbages.js";
 import asyncHandler from "express-async-handler";
 import GarbageNotFoundByIdError from "../exceptions/garbageNotFound.js";
-
+import { testGarbageInput, testGarbage } from "../test/consts.js";
 let garbagesRouter = express.Router();
 
 garbagesRouter.get(
@@ -57,5 +57,6 @@ export default garbagesRouter;
 
 const checkGarbageExistanseAndResponse = (res, statusCode, garbage, id) => {
   if (!garbage) throw new GarbageNotFoundByIdError(id);
+  res.send;
   res.status(statusCode).send(garbage);
 };
