@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
+import { GARBAGE_COLORS, GARBAGE_TYPES } from "../../consts.js";
 
 const garbageSchema = new mongoose.Schema({
   color: {
     type: String,
-    enum: ["Green", "Blue", "Orange", "Black"],
+    enum: GARBAGE_COLORS,
     required: true,
   },
   type: {
     type: String,
-    enum: ["Normal", "Paper Only", "Plastic Only"],
+    enum: GARBAGE_TYPES,
     required: true,
   },
   location: {

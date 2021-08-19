@@ -5,6 +5,7 @@ const connectDbs = async () => {
     await mongoose.connect("mongodb://localhost:27017/garbages", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
     console.log("Connection to mongo succeeded");
   } catch (err) {

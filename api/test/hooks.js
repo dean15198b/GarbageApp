@@ -2,6 +2,8 @@ import GarbageModel from "../dal/models/garbage.js";
 import connectDbs from "../dbsConnect.js";
 import mongoose from "mongoose";
 import { testGarbagesInput } from "./consts.js";
+import * as chai from "chai";
+import chaiAsPromised from "chai-as-promised";
 
 export const mochaHooks = {
   beforeAll: [

@@ -1,17 +1,34 @@
-import chai from "chai";
-import { testGarbages, notExistId } from "../consts.js";
-import { getOneGarbage } from "../helpers.js";
 import {
-  create,
-  deleteByIdIfExist,
+  getGarbageColors,
+  getGarbageTypes,
   getByEmptyingDates,
   getById,
-  updateByIdIfExist,
-} from "../../dal/garbagesRepository.js";
-
+  updateById,
+  deleteById,
+  create,
+} from "../../controllers/garbages.js";
+import { testGarbages, notExistId } from "../consts.js";
+import { getOneGarbage } from "../helpers.js";
+import GarbageNotFoundByIdError from "../../exceptions/garbageNotFound.js";
+import chai from "chai";
+import { GARBAGE_TYPES, GARBAGE_COLORS } from "../../consts.js";
+import chaiAsPromised from "chai-as-promised";
+chai.use(chaiAsPromised);
 let expect = chai.expect;
 
-describe("Garbage repository", function () {
+describe("Garbage controller", function () {
+  describe("Get garbage colors", function () {
+    it("Get", async function () {
+      const colors = await getGarbageColors();
+      expect(colors).to.deep.equal(GARBAGE_COLORS);
+    });
+  });
+  describe("Get garbage types", function () {
+    it("Get", async function () {
+      const types = await getGarbageTypes();
+      expect(types).to.deep.equal(GARBAGE_TYPES);
+    });
+  });
   describe("Get garbage by id", function () {
     it("Get exist", async function () {
       const existGarbage = await getOneGarbage();
@@ -102,7 +119,7 @@ describe("Garbage repository", function () {
         type: "Point",
       };
       const newEmptyingDate = "2021-08-01T12:19:23.000Z";
-      const garbageResponse = await updateByIdIfExist(garbageId, {
+      const garbageResponse = await updateById(garbageId, {
         location: newLocation,
         emptyingDate: newEmptyingDate,
       });
@@ -124,27 +141,26 @@ describe("Garbage repository", function () {
         type: "Point",
       };
       const newEmptyingDate = "2021-08-01T12:19:23.000Z";
-      const shouldGarbage = null;
-      const garbage = await updateByIdIfExist(garbageId, {
+      const garbageUpdating = updateById(garbageId, {
         location: newLocation,
         emptyingDate: newEmptyingDate,
       });
-      expect(JSON.stringify(garbage)).to.equal(JSON.stringify(shouldGarbage));
+      expect(garbageUpdating).to.eventually.throw(GarbageNotFoundByIdError);
     });
   });
   describe("Delete garbage", function () {
     it("Delete exist", async function () {
       const existGarbage = await getOneGarbage();
       const garbageId = existGarbage.id;
-      const garbage = await deleteByIdIfExist(garbageId);
+      const garbage = await deleteById(garbageId);
       delete garbage.id;
       const foundGarbage = await getById(garbageId);
       expect(JSON.stringify(garbage)).to.equal(JSON.stringify(testGarbages[0]));
       expect(foundGarbage).be.null;
     });
     it("Delete not exist", async function () {
-      const garbage = await deleteByIdIfExist("611d1de714febd230c6d1111");
-      expect(garbage).be.null;
+      const garbageDeleting = deleteById("611d1de714febd230c6d1111");
+      expect(garbageDeleting).to.eventually.throw(GarbageNotFoundByIdError);
     });
   });
 });

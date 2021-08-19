@@ -1,11 +1,24 @@
-import * as crud from "../dal/garbagesRepository.js";
+import {
+  create as dalCreate,
+  deleteByIdIfExist as dalDeleteByIdIfExist,
+  getByEmptyingDates as dalGetByEmptyingDates,
+  getById as dalGetById,
+  updateByIdIfExist as dalUpdateByIdIfExist,
+} from "../dal/garbagesRepository.js";
+import { GARBAGE_COLORS, GARBAGE_TYPES } from "../consts.js";
+import { handleFoundGarbageById } from "./tools.js";
 
-export const getByID = crud.getById;
+export const getGarbageColors = async () => GARBAGE_COLORS;
+export const getGarbageTypes = async () => GARBAGE_TYPES;
 
-export const getByEmptyingDates = crud.getByEmptyingDates;
+export const getById = dalGetById;
 
-export const create = crud.create;
+export const getByEmptyingDates = dalGetByEmptyingDates;
 
-export const update = crud.update;
+export const create = dalCreate;
 
-export const deleteById = crud.deleteById;
+export const updateById = async (id, inputsToUpdate) =>
+  handleFoundGarbageById(await dalUpdateByIdIfExist(id, inputsToUpdate), id);
+
+export const deleteById = async (id) =>
+  handleFoundGarbageById(await dalDeleteByIdIfExist(id), id);

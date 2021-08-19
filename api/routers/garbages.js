@@ -1,16 +1,39 @@
 import express from "express";
-import * as garbageController from "../controllers/garbages.js";
+import {
+  getByID,
+  getByEmptyingDates,
+  create,
+  getGarbageColors,
+  getGarbageTypes,
+  updateById,
+  deleteById,
+} from "../controllers/garbages.js";
 import asyncHandler from "express-async-handler";
 import GarbageNotFoundByIdError from "../exceptions/garbageNotFound.js";
 
 let garbagesRouter = express.Router();
 
 garbagesRouter.get(
+  "/colors",
+  asyncHandler(async (req, res) => {
+    res.status(200).send(await getGarbageColors());
+  })
+);
+
+garbagesRouter.get(
+  "/types",
+  asyncHandler(async (req, res) => {
+    res.status(200).send(await getGarbageTypes());
+  })
+);
+
+garbagesRouter.get(
   "/:garbageId",
   asyncHandler(async (req, res) => {
     const id = req.params.garbageId;
-    const garbage = await garbageController.getByID(id);
-    checkGarbageExistanseAndResponse(res, 200, garbage, id);
+    const garbage = await getByID(id);
+    if (!garbage) throw new GarbageNotFoundByIdError(id);
+    res.status(200).send(garbage);
   })
 );
 
@@ -18,7 +41,7 @@ garbagesRouter.get(
   "/",
   asyncHandler(async (req, res) => {
     res.send(
-      await garbageController.getByEmptyingDates(
+      await getByEmptyingDates(
         req.query["minEmptyingDate"],
         req.query["maxEmptyingDate"]
       )
@@ -29,7 +52,7 @@ garbagesRouter.get(
 garbagesRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    res.status(201).send(await garbageController.create(req.body));
+    res.status(201).send(await create(req.body));
   })
 );
 
@@ -37,26 +60,17 @@ garbagesRouter.patch(
   "/:garbageId",
   asyncHandler(async (req, res) => {
     const id = req.params.garbageId;
-    const garbage = await garbageController.update(
-      req.params.garbageId,
-      req.body
-    );
-    checkGarbageExistanseAndResponse(res, 201, garbage, id);
+    const garbage = await updateById(req.params.garbageId, req.body);
+    res.status(201).send(garbage);
   })
 );
 
 garbagesRouter.delete(
   "/:garbageId",
   asyncHandler(async (req, res) => {
-    const garbage = await garbageController.deleteById(req.params.garbageId);
-    checkGarbageExistanseAndResponse(res, 201, garbage, id);
+    const garbage = await deleteById(req.params.garbageId);
+    res.status(201).send(garbage);
   })
 );
 
 export default garbagesRouter;
-
-const checkGarbageExistanseAndResponse = (res, statusCode, garbage, id) => {
-  if (!garbage) throw new GarbageNotFoundByIdError(id);
-  res.send;
-  res.status(statusCode).send(garbage);
-};

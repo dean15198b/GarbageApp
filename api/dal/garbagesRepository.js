@@ -1,5 +1,4 @@
 import GarbageModel from "./models/garbage.js";
-import mongoose from "mongoose";
 
 export const getById = async (id) => {
   const ret = await GarbageModel.findById(id);
@@ -24,7 +23,7 @@ export const create = async (garbageInputs) => {
   return ret.toJSON();
 };
 
-export const update = async (id, { location, emptyingDate }) => {
+export const updateByIdIfExist = async (id, { location, emptyingDate }) => {
   const ret = await GarbageModel.findByIdAndUpdate(
     id,
     {
@@ -36,7 +35,7 @@ export const update = async (id, { location, emptyingDate }) => {
   return ret && ret.toJSON();
 };
 
-export const deleteById = async (id) => {
+export const deleteByIdIfExist = async (id) => {
   const ret = await GarbageModel.findByIdAndRemove(id);
   return ret && ret.toJSON();
 };
