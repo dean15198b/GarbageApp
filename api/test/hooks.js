@@ -14,7 +14,6 @@ export const mochaHooks = {
       console.log("before");
       await mongoose.connection.collections.garbages.drop();
       await GarbageModel.insertMany(testGarbagesInput);
-      await GarbageModel.updateOne({ _id: "611d1de714febd230c6d8777" });
     },
   ],
 };

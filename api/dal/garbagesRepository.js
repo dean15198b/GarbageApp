@@ -11,7 +11,9 @@ export const getByEmptyingDates = async (minDate = null, maxDate = null) => {
   minDate && (findDateCretiria["$gte"] = minDate);
   maxDate && (findDateCretiria["$lt"] = maxDate);
   const findCretiria =
-    findDateCretiria === {} ? {} : { emptyingDate: findDateCretiria };
+    Object.keys(findDateCretiria).length === 0
+      ? {}
+      : { emptyingDate: findDateCretiria };
   return (await GarbageModel.find(findCretiria)).map((garbage) =>
     garbage.toJSON()
   );
@@ -23,10 +25,14 @@ export const create = async (garbageInputs) => {
 };
 
 export const update = async (id, { location, emptyingDate }) => {
-  const ret = await GarbageModel.findByIdAndUpdate(id, {
-    location,
-    emptyingDate,
-  });
+  const ret = await GarbageModel.findByIdAndUpdate(
+    id,
+    {
+      location,
+      emptyingDate: new Date(emptyingDate),
+    },
+    { new: true }
+  );
   return ret && ret.toJSON();
 };
 
