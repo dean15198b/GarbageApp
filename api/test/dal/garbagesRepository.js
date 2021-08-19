@@ -112,8 +112,7 @@ describe("Garbage repository", function () {
       );
     });
     it("update not exist", async function () {
-      const existGarbage = await getOneGarbage();
-      const garbageId = existGarbage.id;
+      const garbageId = "611d1de714febd230c6d1111";
       const newLocation = {
         coordinates: [6, 7],
         type: "Point",
@@ -132,15 +131,14 @@ describe("Garbage repository", function () {
       const existGarbage = await getOneGarbage();
       const garbageId = existGarbage.id;
       const garbage = await crud.deleteById(garbageId);
+      delete garbage.id;
       const foundGarbage = await crud.getById(garbageId);
       expect(JSON.stringify(garbage)).to.equal(JSON.stringify(testGarbages[0]));
-      expect(JSON.stringify(foundGarbage)).to.equal(null);
+      expect(foundGarbage).be.null;
     });
     it("Delete not exist", async function () {
       const garbage = await crud.deleteById("611d1de714febd230c6d1111");
-      const foundGarbage = await crud.getById(garbageId);
-      expect(JSON.stringify(garbage)).to.equal(null);
-      expect(JSON.stringify(foundGarbage)).to.equal(null);
+      expect(garbage).be.null;
     });
   });
 });

@@ -2,7 +2,7 @@ import express from "express";
 import * as garbageController from "../controllers/garbages.js";
 import asyncHandler from "express-async-handler";
 import GarbageNotFoundByIdError from "../exceptions/garbageNotFound.js";
-import { testGarbageInput, testGarbage } from "../test/consts.js";
+
 let garbagesRouter = express.Router();
 
 garbagesRouter.get(

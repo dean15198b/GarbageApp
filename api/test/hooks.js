@@ -11,8 +11,12 @@ export const mochaHooks = {
   ],
   beforeEach: [
     async function () {
-      console.log("before");
-      await mongoose.connection.collections.garbages.drop();
+      try {
+        await mongoose.connection.collections.garbages.drop();
+      } catch (err) {
+        console.log(`Error on droping garbages collection. error: ${err}`);
+      }
+
       await GarbageModel.insertMany(testGarbagesInput);
     },
   ],
