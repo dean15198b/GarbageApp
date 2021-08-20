@@ -5,14 +5,16 @@ import garbagesRouter from "./routers/garbages.js";
 import logger from "./middlewares/logger.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import connectDbs from "./dbsConnect.js";
-
+import allowAccessControlOrigin from "./middlewares/accessControl.js";
 connectDbs();
 const app = express();
-const port = 3000;
+const port = 4000;
 app.use(express.json());
 
 app.use(logger);
 
+("for dev only");
+app.use(allowAccessControlOrigin);
 app.use("/api/garbages", garbagesRouter);
 app.use(errorHandler);
 

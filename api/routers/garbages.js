@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  getByID,
+  getById,
   getByEmptyingDates,
   create,
   getGarbageColors,
@@ -31,7 +31,7 @@ garbagesRouter.get(
   "/:garbageId",
   asyncHandler(async (req, res) => {
     const id = req.params.garbageId;
-    const garbage = await getByID(id);
+    const garbage = await getById(id);
     if (!garbage) throw new GarbageNotFoundByIdError(id);
     res.status(200).send(garbage);
   })
