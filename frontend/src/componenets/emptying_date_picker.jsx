@@ -7,7 +7,12 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
-const EmptyingDatePicker = ({ emptyingDate, setEmptyingDate, header }) => (
+const EmptyingDatePicker = ({
+  emptyingDate,
+  setEmptyingDate,
+  header,
+  error,
+}) => (
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <KeyboardDatePicker
       disableToolbar
@@ -15,12 +20,13 @@ const EmptyingDatePicker = ({ emptyingDate, setEmptyingDate, header }) => (
       format="MM/dd/yyyy"
       margin="normal"
       id={header}
-      label={header}
-      value={emptyingDate && new Date(emptyingDate)}
+      label={emptyingDate === "" ? "" : header}
+      value={emptyingDate === "" ? null : emptyingDate}
       onChange={(newDate) => setEmptyingDate(newDate.toDateString())}
       KeyboardButtonProps={{
         "aria-label": "change date",
       }}
+      error={!!error}
     />
   </MuiPickersUtilsProvider>
 );

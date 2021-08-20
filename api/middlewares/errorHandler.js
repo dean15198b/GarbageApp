@@ -2,12 +2,16 @@ import GarbageNotFoundByIdError from "../exceptions/garbageNotFound.js";
 import mongoose from "mongoose";
 
 const normalUserErrorHandler = (res, err) => res.status(400).send(err.message);
+const castErrorHandeler = (res, err) => {
+  if (err.path === "_id") garbageNotFoundErrorHandler(res, err);
+  else normalUserErrorHandler(res, err);
+};
 const garbageNotFoundErrorHandler = (res, err) =>
   res.status(404).send(err.message);
 
 const userErrorTypes = {
   [GarbageNotFoundByIdError.name]: garbageNotFoundErrorHandler,
-  [mongoose.Error.CastError.name]: normalUserErrorHandler,
+  [mongoose.Error.CastError.name]: castErrorHandeler,
   [mongoose.Error.ValidationError.name]: normalUserErrorHandler,
 };
 

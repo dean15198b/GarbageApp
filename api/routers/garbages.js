@@ -59,7 +59,6 @@ garbagesRouter.post(
 garbagesRouter.patch(
   "/:garbageId",
   asyncHandler(async (req, res) => {
-    const id = req.params.garbageId;
     const garbage = await updateById(req.params.garbageId, req.body);
     res.status(201).send(garbage);
   })

@@ -13,6 +13,7 @@ import GarbagesPage from "./pages/tables_page";
 import Navigator from "./componenets/navigator";
 import { GarbagesProvider } from "./contexts/garbages_contexts";
 import { GarbageChoiceProvider } from "./contexts/garbage_choice_context";
+import { SnackbarProvider } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -30,17 +31,19 @@ function App() {
         <Navigator />
       </AppBar>
       <div className={classes.heroContent}>
-        {/* <Container> */}
-        <GarbagesProvider>
-          <GarbageChoiceProvider>
-            <Switch>
-              <Route path="/">
-                <GarbagesPage />
-              </Route>
-            </Switch>
-          </GarbageChoiceProvider>
-        </GarbagesProvider>
-        {/* </Container> */}
+        <SnackbarProvider maxSnack={3}>
+          {/* <Container> */}
+          <GarbagesProvider>
+            <GarbageChoiceProvider>
+              <Switch>
+                <Route path="/">
+                  <GarbagesPage />
+                </Route>
+              </Switch>
+            </GarbageChoiceProvider>
+          </GarbagesProvider>
+          {/* </Container> */}
+        </SnackbarProvider>
       </div>
     </Router>
   );

@@ -9,6 +9,8 @@ import useGarbageActions from "../hooks/useGarbageActions";
 import useGarbages from "../hooks/useGarbages";
 import ChoiceCoordinateTextField from "./choice_coordinate_text_field";
 import EmptyingDatePicker from "./emptying_date_picker";
+import { Container } from "@material-ui/core";
+import ButtonsArea from "./buttons_area";
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +25,9 @@ const useStyles = makeStyles({
     fontSize: 14,
   },
   pos: {
+    marginTop: 8,
     marginBottom: 12,
+    marginRight: 20,
   },
 });
 
@@ -51,33 +55,50 @@ const GarbageChoiceCard = () => {
           {id}
         </Typography>
         <Typography variant="h5" component="h2">
-          {`Color: ${color}
-            Type: ${type}
-          Latitude: ${location.coordinates[1]}
-            Longitude: ${location.coordinates[0]}`}
+          {`${type}, ${color}`}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          {coordinateInfos.map(({ coordinateIndex, coordinateName }) => (
+        {coordinateInfos.map(({ coordinateIndex, coordinateName }) => {
+          return (
             <ChoiceCoordinateTextField
+              key={`${coordinateName}`}
               coordinateIndex={coordinateIndex}
               coordinateName={coordinateName}
             />
-          ))}
-        </Typography>
-        <Typography variant="body2" component="p">
-          <EmptyingDatePicker
-            emptyingDate={emptyingDate}
-            setEmptyingDate={setGarbageChoice((garbage) => {
+          );
+        })}
+        <EmptyingDatePicker
+          emptyingDate={emptyingDate}
+          setEmptyingDate={(emptyingDate) =>
+            setGarbageChoice((garbage) => {
               let garbageCopy = JSON.parse(JSON.stringify(garbage));
               garbageCopy.emptyingDate = emptyingDate;
               return garbageCopy;
-            })}
-            header="Emptying Date"
-          />
-        </Typography>
+            })
+          }
+          header="Emptying Date"
+        />
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button
+          size="small"
+          color="primary"
+          onClick={(e) =>
+            updateGarbage(id, {
+              emptyingDate,
+              lng: location.coordinates[0],
+              lat: location.coordinates[1],
+            })
+          }
+        >
+          SAVE CHANGES
+        </Button>
+        <Button
+          size="small"
+          color="secondary"
+          onClick={(e) => deleteGarbage(id)}
+        >
+          DELETE
+        </Button>
       </CardActions>
     </Card>
   );

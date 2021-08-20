@@ -38,6 +38,7 @@ function GarbagesMap() {
               lng: garbage.location.coordinates[0],
             }}
             onClick={(e) => {
+              console.log(garbage);
               setGarbageChoice(garbage);
             }}
           />
