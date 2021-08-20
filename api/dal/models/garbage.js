@@ -26,14 +26,20 @@ const garbageSchema = new mongoose.Schema({
   emptyingDate: Date,
 });
 
-garbageSchema.options.toJSON = {
-  transform: function (doc, ret, options) {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
-    return ret;
-  },
-};
+// garbageSchema.path("location").validate(function (garbage) {
+//   const lng = garbage.location.coordinates[0];
+//   const lat = garbage.location.coordinates[1];
+//   return lng >= -180 && lng <= 180 && lat >= -90 && lat <= 90;
+// });
+
+// garbageSchema.options.toJSON = {
+//   transform: function (doc, ret, options) {
+//     ret.id = ret._id;
+//     delete ret._id;
+//     delete ret.__v;
+//     return ret;
+//   },
+// };
 
 const GarbageModel = mongoose.model("Garbage", garbageSchema);
 
