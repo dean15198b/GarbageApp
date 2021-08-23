@@ -24,7 +24,12 @@ const garbageSchema = new mongoose.Schema({
       validate: (value) =>
         value &&
         value.length === 2 &&
-        value.findIndex((coordinate) => typeof coordinate !== "number") === -1,
+        value.findIndex((coordinate) => typeof coordinate !== "number") ===
+          -1 &&
+        value[0] >= -180 &&
+        value[0] <= 180 &&
+        value[1] >= -90 &&
+        value[1] <= 90,
     },
   },
   emptyingDate: { type: Date, required: true },
