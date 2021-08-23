@@ -15,9 +15,9 @@ const ButtonsArea = ({ buttons }) => {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="center" spacing={1}>
+    <Grid container className={classes.root}>
+      <Grid item>
+        <Grid container justify="center" spacing={2}>
           {buttons.map((button, index) => (
             <Grid item key={index}>
               {button}

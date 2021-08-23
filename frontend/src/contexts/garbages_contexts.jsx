@@ -17,6 +17,8 @@ export const GarbagesProvider = ({ children }) => {
   const [garbages, setGarbages] = useState([]);
   const [garbageTypes, setGarbageTypes] = useState([]);
   const [garbageColors, setGarbageColors] = useState([]);
+  const [garbageChoices, setGarbageChoices] = useState([]);
+
   const lnglatToGarbage = useMemo(
     () =>
       Object.fromEntries(
@@ -33,10 +35,23 @@ export const GarbagesProvider = ({ children }) => {
   const loadColorOptions = async () =>
     setGarbageColors(await getColorOptions());
   const loadTypesOptions = async () => setGarbageTypes(await getTypesOptions());
-  const loadGarbages = async () =>
+
+  const removeNotRelevantChoices = () =>
+    setGarbageChoices((choices) =>
+      choices.filter(
+        (choice) =>
+          garbages.findIndex((iterator) => iterator.id === choice.id) !== -1
+      )
+    );
+
+  const loadGarbages = async () => {
     setGarbages(
       await getGarbagesByEmptyingDates(startEmptyingDate, endEmptyingDate)
     );
+  };
+  useEffect(() => {
+    removeNotRelevantChoices();
+  }, [garbages]);
 
   useEffect(() => {
     loadColorOptions();
@@ -46,11 +61,12 @@ export const GarbagesProvider = ({ children }) => {
   useEffect(() => {
     loadGarbages();
   }, [startEmptyingDate, endEmptyingDate]);
+
   const getGarbageByLocation = (lng, lat) => {
-    console.log(getGarbageLocationKey);
     return lnglatToGarbage[getGarbageLocationKey(lng, lat)];
   };
-
+  console.log(garbages);
+  console.log(garbageChoices);
   return (
     <GarbagesContext.Provider
       value={{
@@ -59,6 +75,7 @@ export const GarbagesProvider = ({ children }) => {
         garbages,
         garbageTypes,
         garbageColors,
+        garbageChoices,
       }}
     >
       <GarbageActionsContext.Provider
@@ -67,6 +84,7 @@ export const GarbagesProvider = ({ children }) => {
           setEndEmptyingDate,
           loadGarbages,
           getGarbageByLocation,
+          setGarbageChoices,
         }}
       >
         {children}

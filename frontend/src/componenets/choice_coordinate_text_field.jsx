@@ -23,22 +23,13 @@ const useStyles = makeStyles({
   },
 });
 
-const ChoiceCoordinateTextField = ({ coordinateIndex, coordinateName }) => {
-  const { garbageChoice } = useGarbages();
-  const { setGarbageChoice } = useGarbageActions();
+const ChoiceCoordinateTextField = ({ coordinateName, value, setValue }) => {
   const classes = useStyles();
-
   return (
     <TextField
       required
-      value={garbageChoice.location.coordinates[coordinateIndex]}
-      onChange={(e) => {
-        setGarbageChoice((garbage) => {
-          let garbageClone = JSON.parse(JSON.stringify(garbage));
-          garbageClone.location.coordinates[coordinateIndex] = e.target.value;
-          return garbageClone;
-        });
-      }}
+      value={value}
+      onChange={(e) => setValue(parseInt(e.target.value))}
       id={`${coordinateName}-input-id`}
       label={coordinateName}
       type="number"

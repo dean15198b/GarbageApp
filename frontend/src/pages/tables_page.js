@@ -5,16 +5,58 @@ import GarbageChoiceArea from "../componenets/garbage_choice_area";
 import GarbageSearch from "../componenets/garbage_search";
 import GarbageCreatingArea from "../componenets/garbage_creating_area";
 import GarbagesDownloderButton from "../componenets/garbage_downloader_button";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+}));
 
 const GarbagesPage = () => {
+  const classes = useStyles();
+
   return (
     <>
-      <EmptyingDatesArea />
-      <GarbagesMap />
-      <GarbageSearch />
-      <GarbageChoiceArea />
-      <GarbageCreatingArea />
-      <GarbagesDownloderButton />
+      <div className={classes.root}>
+        <Container maxWidth={false}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <EmptyingDatesArea />
+            </Grid>
+            <Grid item container justify="center" xs={12}>
+              <GarbagesDownloderButton />
+            </Grid>
+            <Grid item xs={12}>
+              <GarbagesMap />
+            </Grid>
+            <Grid item xs={6}>
+              <GarbageSearch />
+            </Grid>
+            {/* <Grid item xs={2}>
+              <GarbageChoiceArea />
+            </Grid> */}
+            <Grid item xs={6}>
+              <GarbageCreatingArea />
+            </Grid>
+          </Grid>
+        </Container>
+      </div>
+      <>
+        {/* <EmptyingDatesArea />
+        <GarbagesDownloderButton />
+        <GarbagesMap />
+        <GarbageSearch />
+        <GarbageChoiceArea />
+        <GarbageCreatingArea /> */}
+      </>
     </>
   );
 };

@@ -12,13 +12,12 @@ import Container from "@material-ui/core/Container";
 import GarbagesPage from "./pages/tables_page";
 import Navigator from "./componenets/navigator";
 import { GarbagesProvider } from "./contexts/garbages_contexts";
-import { GarbageChoiceProvider } from "./contexts/garbage_choice_context";
 import { SnackbarProvider } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(4, 0, 6),
+    padding: theme.spacing(1, 0, 6),
   },
 }));
 
@@ -34,13 +33,11 @@ function App() {
         <SnackbarProvider maxSnack={3}>
           {/* <Container> */}
           <GarbagesProvider>
-            <GarbageChoiceProvider>
-              <Switch>
-                <Route path="/">
-                  <GarbagesPage />
-                </Route>
-              </Switch>
-            </GarbageChoiceProvider>
+            <Switch>
+              <Route path="/">
+                <GarbagesPage />
+              </Route>
+            </Switch>
           </GarbagesProvider>
           {/* </Container> */}
         </SnackbarProvider>

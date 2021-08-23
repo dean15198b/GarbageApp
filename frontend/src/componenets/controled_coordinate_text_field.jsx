@@ -2,11 +2,11 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { Controller } from "react-hook-form";
 
-const ControledCoordinateInput = ({ name, control }) => (
+const ControledCoordinateInput = ({ name, control, defaultValue }) => (
   <Controller
     name={name}
     control={control}
-    defaultValue=""
+    defaultValue={defaultValue || ""}
     render={({ field: { onChange, value }, fieldState: { error } }) => (
       <TextField
         label={name}

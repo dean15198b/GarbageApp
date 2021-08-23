@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonsArea from "./buttons_area";
 import EmptyingDatePicker from "./emptying_date_picker";
-import useGarbages from "../hooks/useGarbageActions";
+import useGarbages from "../hooks/useGarbages";
 import useGarbageAction from "../hooks/useGarbageActions";
 
 const EmptyingDatesArea = () => {
@@ -19,7 +19,6 @@ const EmptyingDatesArea = () => {
       header: "Until Emptying Date",
     },
   ];
-
   return (
     <ButtonsArea
       buttons={buttonsInfo.map((btnInfo) => (

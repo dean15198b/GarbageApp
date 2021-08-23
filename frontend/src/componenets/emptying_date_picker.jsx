@@ -21,8 +21,8 @@ const EmptyingDatePicker = ({
       margin="normal"
       id={header}
       label={emptyingDate === "" ? "" : header}
-      value={emptyingDate === "" ? null : emptyingDate}
-      onChange={(newDate) => setEmptyingDate(newDate.toDateString())}
+      value={emptyingDate}
+      onChange={(newDate) => setEmptyingDate(newDate && newDate.toDateString())}
       KeyboardButtonProps={{
         "aria-label": "change date",
       }}
