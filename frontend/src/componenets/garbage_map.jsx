@@ -1,14 +1,12 @@
-import React, { useState, useContext, useMemo } from "react";
+import React from "react";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { Marker } from "@react-google-maps/api";
 import useGarbages from "../hooks/useGarbages";
 import useGarbageActions from "../hooks/useGarbageActions";
 import { InfoWindow } from "@react-google-maps/api";
-import GarbageChoiceArea from "./garbage_choice_area";
 import GarbageChoiceCard from "./garbage_choice_card";
 
 const containerStyle = {
-  // width: "800px",
   minHeight: 550,
   maxHeight: 600,
 };
@@ -19,24 +17,13 @@ const center = {
 
 function GarbagesMap() {
   const { garbages, garbageChoices } = useGarbages();
-  const {
-    setGarbageChoice,
-    getGarbageByLocation,
-    chooseGarbage,
-    unChooseGarbage,
-  } = useGarbageActions();
+  const { chooseGarbage, unChooseGarbage } = useGarbageActions();
   return (
     <LoadScript googleMapsApiKey="AIzaSyBjVB68qjsvaOZJt_hL0u8EZhQCru9hV-U">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
-        onDblClick={(e) => {
-          // console.log(getGarbageByLocation(e.latLng.lng(), e.latLng.lat()));
-          // setGarbageChoice(
-          //   getGarbageByLocation(e.latLng.lng(), e.latLng.lat())
-          // );
-        }}
+        zoom={3}
         options={{ disableDoubleClickZoom: true }}
       >
         <>
@@ -47,10 +34,7 @@ function GarbagesMap() {
                 lat: garbage.location.coordinates[1],
                 lng: garbage.location.coordinates[0],
               }}
-              onClick={(e) => {
-                // console.log(garbage);
-                chooseGarbage(garbage);
-              }}
+              onClick={() => chooseGarbage(garbage)}
             />
           ))}
           {garbageChoices.map((garbageChoice) => {

@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { GarbageActionsContext } from "../contexts/garbages_contexts";
-import { getGarbageById, createGarbage } from "../services/garbages_service";
 import { useSnackbar } from "notistack";
-
 import {
+  getGarbageById as getGarbageByIdCrud,
+  createGarbage as createGarbageCrud,
   updateGarbage as updateGarbageCrud,
   deleteGarbage as deleteGarbageCrud,
 } from "../services/garbages_service";
@@ -18,8 +18,8 @@ const useGarbageActions = () => {
   } = useContext(GarbageActionsContext);
   const { enqueueSnackbar } = useSnackbar();
 
-  const crudAndUpdate = async (crud) => {
-    const garbage = await crud();
+  const crudAndUpdate = async (crudAction) => {
+    const garbage = await crudAction();
     loadGarbages();
     return garbage;
   };
@@ -38,6 +38,10 @@ const useGarbageActions = () => {
   const notifyNoGarbageFoundById = (id) =>
     enqueueSnackbar(`No garbage was found with the ID ${id}`, {
       variant: "error",
+      anchorOrigin: {
+        vertical: "bottom",
+        horizontal: "right",
+      },
     });
 
   const chooseGarbage = (garbageToAdd) => {
@@ -53,26 +57,20 @@ const useGarbageActions = () => {
       garbages.filter((garbage) => garbage.id !== garbageId)
     );
 
-  const changeGarbage = (changedGarbage) =>
-    setGarbageChoices((garbages) => [
-      ...garbages.filter((garbage) => garbage.id !== changedGarbage.id),
-      changedGarbage,
-    ]);
-
-  const loadAndAddGarbageChoice = async (garbageToAdd) => {
+  const chooseGarbageAndLoad = async (garbageToAdd) => {
     await loadGarbages();
     chooseGarbage(garbageToAdd);
   };
 
   const searchGarbageById = async (id) => {
-    const searchedGarbage = await getGarbageById(id);
+    const searchedGarbage = await getGarbageByIdCrud(id);
     if (!searchedGarbage) notifyNoGarbageFoundById(id);
-    else await loadAndAddGarbageChoice(searchedGarbage);
+    else await chooseGarbageAndLoad(searchedGarbage);
   };
 
-  const createGarbageAndLoad = async (inputs) => {
-    const newGarbage = await createGarbage(inputs);
-    await loadAndAddGarbageChoice(newGarbage);
+  const createGarbage = async (inputs) => {
+    const newGarbage = await createGarbageCrud(inputs);
+    await chooseGarbageAndLoad(newGarbage);
   };
 
   return {
@@ -84,8 +82,7 @@ const useGarbageActions = () => {
     unChooseGarbage,
     getGarbageByLocation,
     searchGarbageById,
-    createGarbageAndLoad,
-    changeGarbage,
+    createGarbage,
   };
 };
 

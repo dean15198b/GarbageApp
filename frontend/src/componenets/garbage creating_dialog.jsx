@@ -1,29 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
-import PersonIcon from "@material-ui/icons/Person";
-import AddIcon from "@material-ui/icons/Add";
-import Typography from "@material-ui/core/Typography";
-import { blue } from "@material-ui/core/colors";
-import TextField from "@material-ui/core/TextField";
 import { useForm, Controller } from "react-hook-form";
 import EmptyingDatePicker from "./emptying_date_picker";
-import Select from "@material-ui/core/Select";
 import useGarbages from "../hooks/useGarbages";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import ControlledOptionsInput from "./controled_options_input";
 import ControledCoordinateInput from "./controled_coordinate_text_field";
 import useGarbageActions from "../hooks/useGarbageActions";
-import { createGarbage } from "../services/garbages_service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 const defaultFormValues = {
   Latitude: "",
   Longtitude: "",
@@ -53,7 +38,7 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
   const { handleSubmit, control, reset } = useForm(defaultFormValues);
   const classes = useStyles();
   const { garbageTypes, garbageColors } = useGarbages();
-  const { createGarbageAndLoad } = useGarbageActions();
+  const { createGarbage } = useGarbageActions();
 
   const controledCoordinatesInputInfos = [
     { name: "Latitude" },
@@ -76,12 +61,10 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
     lng,
     emptyingDate,
   }) => {
-    await createGarbageAndLoad({ color, type, lat, lng, emptyingDate });
+    await createGarbage({ color, type, lat, lng, emptyingDate });
     closeAndReset();
   };
-  const onSubmit = (form) => {
-    console.log(form);
-
+  const onSubmit = (form) =>
     addGarbageAndClose({
       color: form.Color,
       type: form.Type,
@@ -89,10 +72,9 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
       lng: form.Longtitude,
       emptyingDate: form["Emptying Date"],
     });
-  };
+
   return (
     <Dialog onClose={closeAndReset} open={isOpen}>
-      {/* <DialogTitle>Add Garbage</DialogTitle> */}
       <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
         {controledCoordinatesInputInfos.map((info) => (
           <ControledCoordinateInput
@@ -105,16 +87,14 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
           name="Emptying Date"
           control={control}
           defaultValue={null}
-          render={({ field: { onChange, value }, fieldState: { error } }) => {
-            return (
-              <EmptyingDatePicker
-                emptyingDate={value}
-                setEmptyingDate={onChange}
-                header="Empying Date"
-                error={!!error}
-              />
-            );
-          }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <EmptyingDatePicker
+              emptyingDate={value}
+              setEmptyingDate={onChange}
+              header="Empying Date"
+              error={!!error}
+            />
+          )}
           rules={{ required: "Emptying date required" }}
         />
         {controledOptionsInputInfos.map((info) => (

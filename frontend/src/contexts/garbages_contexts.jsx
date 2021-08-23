@@ -4,12 +4,9 @@ import {
   getTypesOptions,
   getGarbagesByEmptyingDates,
 } from "../services/garbages_service.js";
-// import getGarbageLocationKey from "../tools/garbage_location_key.js";
 
 export const GarbagesContext = createContext();
 export const GarbageActionsContext = createContext();
-
-const getGarbageLocationKey = (lng, lat) => `${lng}-${lat}`;
 
 export const GarbagesProvider = ({ children }) => {
   const [startEmptyingDate, setStartEmptyingDate] = useState(null);
@@ -19,22 +16,16 @@ export const GarbagesProvider = ({ children }) => {
   const [garbageColors, setGarbageColors] = useState([]);
   const [garbageChoices, setGarbageChoices] = useState([]);
 
-  const lnglatToGarbage = useMemo(
-    () =>
-      Object.fromEntries(
-        garbages.map((gar) => [
-          getGarbageLocationKey(
-            gar.location.coordinates[0],
-            gar.location.coordinates[1]
-          ),
-          gar,
-        ])
-      ),
-    [garbages]
-  );
   const loadColorOptions = async () =>
     setGarbageColors(await getColorOptions());
+
   const loadTypesOptions = async () => setGarbageTypes(await getTypesOptions());
+
+  const loadGarbages = async () => {
+    setGarbages(
+      await getGarbagesByEmptyingDates(startEmptyingDate, endEmptyingDate)
+    );
+  };
 
   const removeNotRelevantChoices = () =>
     setGarbageChoices((choices) =>
@@ -44,11 +35,6 @@ export const GarbagesProvider = ({ children }) => {
       )
     );
 
-  const loadGarbages = async () => {
-    setGarbages(
-      await getGarbagesByEmptyingDates(startEmptyingDate, endEmptyingDate)
-    );
-  };
   useEffect(() => {
     removeNotRelevantChoices();
   }, [garbages]);
@@ -62,11 +48,6 @@ export const GarbagesProvider = ({ children }) => {
     loadGarbages();
   }, [startEmptyingDate, endEmptyingDate]);
 
-  const getGarbageByLocation = (lng, lat) => {
-    return lnglatToGarbage[getGarbageLocationKey(lng, lat)];
-  };
-  console.log(garbages);
-  console.log(garbageChoices);
   return (
     <GarbagesContext.Provider
       value={{
@@ -83,7 +64,6 @@ export const GarbagesProvider = ({ children }) => {
           setStartEmptyingDate,
           setEndEmptyingDate,
           loadGarbages,
-          getGarbageByLocation,
           setGarbageChoices,
         }}
       >

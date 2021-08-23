@@ -1,12 +1,10 @@
 import React from "react";
 import "date-fns";
-
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +20,6 @@ const EmptyingDatePicker = ({
   error,
 }) => {
   const classes = useStyles();
-
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
@@ -32,7 +29,7 @@ const EmptyingDatePicker = ({
         format="MM/dd/yyyy"
         margin="normal"
         id={header}
-        label={emptyingDate === null ? "" : header}
+        label={emptyingDate !== null && emptyingDate !== "" ? "" : header}
         value={emptyingDate}
         onChange={(newDate) =>
           setEmptyingDate(newDate && newDate.toDateString())

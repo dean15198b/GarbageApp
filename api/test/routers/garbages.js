@@ -17,7 +17,6 @@ import {
 import { response } from "express";
 
 chai.use(chaiAsPromised);
-// Configure chai
 chai.use(chaiHttp);
 chai.should();
 

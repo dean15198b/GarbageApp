@@ -3,12 +3,9 @@ import React from "react";
 
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-
 import GarbagesPage from "./pages/tables_page";
 import Navigator from "./componenets/navigator";
 import { GarbagesProvider } from "./contexts/garbages_contexts";
@@ -31,7 +28,6 @@ function App() {
       </AppBar>
       <div className={classes.heroContent}>
         <SnackbarProvider maxSnack={3}>
-          {/* <Container> */}
           <GarbagesProvider>
             <Switch>
               <Route path="/">
@@ -39,7 +35,6 @@ function App() {
               </Route>
             </Switch>
           </GarbagesProvider>
-          {/* </Container> */}
         </SnackbarProvider>
       </div>
     </Router>

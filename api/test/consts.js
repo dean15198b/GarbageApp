@@ -1,11 +1,11 @@
 export const testGarbagesInput = [
   {
     location: {
-      coordinates: [2, 3],
+      coordinates: [31, 34],
       type: "Point",
     },
     color: "Green",
-    type: "Normal",
+    type: "Paper Only",
     emptyingDate: "2021-08-18T12:19:23.000Z",
   },
   {

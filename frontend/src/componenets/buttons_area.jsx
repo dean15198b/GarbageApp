@@ -17,7 +17,7 @@ const ButtonsArea = ({ buttons }) => {
   return (
     <Grid container className={classes.root}>
       <Grid item>
-        <Grid container justify="center" spacing={2}>
+        <Grid container spacing={2}>
           {buttons.map((button, index) => (
             <Grid item key={index}>
               {button}

@@ -13,8 +13,8 @@ app.use(express.json());
 
 app.use(logger);
 
-("for dev only");
-app.use(allowAccessControlOrigin);
+if (app.get("env") === "development") app.use(allowAccessControlOrigin);
+
 app.use("/api/garbages", garbagesRouter);
 app.use(errorHandler);
 

@@ -36,22 +36,19 @@ const ControledCoordinateInput = ({ name, control, defaultValue }) => {
       name={name}
       control={control}
       defaultValue={defaultValue || ""}
-      render={({ field: { onChange, value }, fieldState: { error } }) => {
-        console.log(error);
-        return (
-          <TextField
-            className={classes.root}
-            label={name}
-            margin="2"
-            variant="filled"
-            value={value}
-            onChange={onChange}
-            error={!!error}
-            type="number"
-            helperText={getHelperText(error)}
-          />
-        );
-      }}
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
+        <TextField
+          className={classes.root}
+          label={name}
+          margin="2"
+          variant="filled"
+          value={value}
+          onChange={onChange}
+          error={!!error}
+          type="number"
+          helperText={getHelperText(error)}
+        />
+      )}
       rules={{
         required: `${name} required`,
         max: minMaxByCoordinate[name].max,

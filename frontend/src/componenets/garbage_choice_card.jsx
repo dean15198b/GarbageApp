@@ -13,7 +13,6 @@ import { useForm, Controller } from "react-hook-form";
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 100,
-    // minWidth: 460,
     maxWidth: 500,
   },
   title: {
@@ -53,30 +52,26 @@ const GarbageChoiceCard = ({ garbageChoice }) => {
           <Typography variant="h5" component="h2">
             {`${type}, ${color}`}
           </Typography>
-          {coordinateInfos.map((info) => {
-            return (
-              <ControledCoordinateInput
-                key={info.name}
-                name={info.name}
-                control={control}
-                defaultValue={garbageChoice.location.coordinates[info.index]}
-              />
-            );
-          })}
+          {coordinateInfos.map((info) => (
+            <ControledCoordinateInput
+              key={info.name}
+              name={info.name}
+              control={control}
+              defaultValue={garbageChoice.location.coordinates[info.index]}
+            />
+          ))}
           <Controller
             name="Emptying Date"
             control={control}
             defaultValue={garbageChoice.emptyingDate}
-            render={({ field: { onChange, value }, fieldState: { error } }) => {
-              return (
-                <EmptyingDatePicker
-                  emptyingDate={value}
-                  setEmptyingDate={onChange}
-                  header="Empying Date"
-                  error={!!error}
-                />
-              );
-            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <EmptyingDatePicker
+                emptyingDate={value}
+                setEmptyingDate={onChange}
+                header="Empying Date"
+                error={!!error}
+              />
+            )}
             rules={{ required: "Emptying date required" }}
           />
         </CardContent>
