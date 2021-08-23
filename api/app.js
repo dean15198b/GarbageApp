@@ -7,7 +7,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import connectDbs from "./dbsConnect.js";
 import allowAccessControlOrigin from "./middlewares/accessControl.js";
 connectDbs();
-const app = express();
+export const app = express();
 const port = 4000;
 app.use(express.json());
 
