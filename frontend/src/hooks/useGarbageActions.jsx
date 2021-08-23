@@ -70,7 +70,7 @@ const useGarbageActions = () => {
     else await loadAndAddGarbageChoice(searchedGarbage);
   };
 
-  const addGarbage = async (inputs) => {
+  const createGarbageAndLoad = async (inputs) => {
     const newGarbage = await createGarbage(inputs);
     await loadAndAddGarbageChoice(newGarbage);
   };
@@ -84,7 +84,7 @@ const useGarbageActions = () => {
     unChooseGarbage,
     getGarbageByLocation,
     searchGarbageById,
-    addGarbage,
+    createGarbageAndLoad,
     changeGarbage,
   };
 };

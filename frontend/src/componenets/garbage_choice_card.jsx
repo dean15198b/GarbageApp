@@ -10,15 +10,16 @@ import EmptyingDatePicker from "./emptying_date_picker";
 import ControledCoordinateInput from "./controled_coordinate_text_field";
 import { useForm, Controller } from "react-hook-form";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275,
-    minWidth: 460,
+    minWidth: 100,
+    // minWidth: 460,
+    maxWidth: 500,
   },
   title: {
     fontSize: 14,
   },
-});
+}));
 
 const coordinateInfos = [
   { index: 1, name: "Latitude" },

@@ -9,7 +9,8 @@ import GarbageChoiceCard from "./garbage_choice_card";
 
 const containerStyle = {
   // width: "800px",
-  height: "500px",
+  minHeight: 550,
+  maxHeight: 600,
 };
 const center = {
   lat: 31.771959,

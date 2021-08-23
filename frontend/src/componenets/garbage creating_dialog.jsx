@@ -53,7 +53,7 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
   const { handleSubmit, control, reset } = useForm(defaultFormValues);
   const classes = useStyles();
   const { garbageTypes, garbageColors } = useGarbages();
-  const { addGarbage } = useGarbageActions();
+  const { createGarbageAndLoad } = useGarbageActions();
 
   const controledCoordinatesInputInfos = [
     { name: "Latitude" },
@@ -76,12 +76,12 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
     lng,
     emptyingDate,
   }) => {
-    await createGarbage({ color, type, lat, lng, emptyingDate });
+    await createGarbageAndLoad({ color, type, lat, lng, emptyingDate });
     closeAndReset();
   };
   const onSubmit = (form) => {
     console.log(form);
-    debugger;
+
     addGarbageAndClose({
       color: form.Color,
       type: form.Type,
@@ -92,7 +92,7 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
   };
   return (
     <Dialog onClose={closeAndReset} open={isOpen}>
-      <DialogTitle>Create New Garbage</DialogTitle>
+      {/* <DialogTitle>Add Garbage</DialogTitle> */}
       <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
         {controledCoordinatesInputInfos.map((info) => (
           <ControledCoordinateInput
@@ -104,7 +104,7 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
         <Controller
           name="Emptying Date"
           control={control}
-          defaultValue=""
+          defaultValue={null}
           render={({ field: { onChange, value }, fieldState: { error } }) => {
             return (
               <EmptyingDatePicker
@@ -131,7 +131,7 @@ const GarbageCreatingDialog = ({ closeDialog, isOpen }) => {
             Cancel
           </Button>
           <Button type="submit" variant="contained" color="primary">
-            Signup
+            Create
           </Button>
         </div>
       </form>

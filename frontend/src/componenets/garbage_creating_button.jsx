@@ -1,11 +1,16 @@
 import React from "react";
-import Fab from "@material-ui/core/Fab";
+import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 
 const GarbageCreatingButton = ({ openDialog }) => (
-  <Fab color="primary" onClick={openDialog}>
-    <AddIcon />
-  </Fab>
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={openDialog}
+    startIcon={<AddIcon />}
+  >
+    NEW Garbage
+  </Button>
 );
 
 export default GarbageCreatingButton;

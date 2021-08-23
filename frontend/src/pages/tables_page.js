@@ -31,32 +31,20 @@ const GarbagesPage = () => {
             <Grid item xs={12}>
               <EmptyingDatesArea />
             </Grid>
-            <Grid item container justify="center" xs={12}>
-              <GarbagesDownloderButton />
-            </Grid>
+
             <Grid item xs={12}>
               <GarbagesMap />
             </Grid>
             <Grid item xs={6}>
               <GarbageSearch />
-            </Grid>
-            {/* <Grid item xs={2}>
-              <GarbageChoiceArea />
-            </Grid> */}
-            <Grid item xs={6}>
               <GarbageCreatingArea />
+              <GarbagesDownloderButton />
             </Grid>
+
+            <Grid item container justify="center" xs={6}></Grid>
           </Grid>
         </Container>
       </div>
-      <>
-        {/* <EmptyingDatesArea />
-        <GarbagesDownloderButton />
-        <GarbagesMap />
-        <GarbageSearch />
-        <GarbageChoiceArea />
-        <GarbageCreatingArea /> */}
-      </>
     </>
   );
 };
