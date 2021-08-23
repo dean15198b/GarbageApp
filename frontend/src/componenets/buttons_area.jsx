@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
+    padding: 8,
   },
 }));
 
