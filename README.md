@@ -10,7 +10,7 @@ I used MongoDB as the DB of the app.
 You can easily deploy it with Docker:
 
 ```bash
-docker run --name db -v ~/test/mongo/data:/data/db -p 27017:27017 mongo:latest
+ docker run --name db -v ~/test/data:/data/db -p 27017:27017 mongo:latest
 ```
 
 ## Installation
